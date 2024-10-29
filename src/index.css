@@ -23,6 +23,11 @@ body {
     /*scroll do lado*/
     overflow-y: auto !important;
 }
+*::selection {
+    color: black;
+    background: #56CCF2;
+
+}
 
 code {
     font-family: source-code-pro, Menlo, Monaco,
@@ -30,3 +35,47 @@ code {
 }
 
 
+
+.hero-input{
+    font-family: cursive;
+    font-size: 1rem;
+    color: #434343;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    background: #ccc;
+    outline: none;
+    border: none;
+
+    width: 80%;
+    transition: width 0.5s, background 0.2s;
+}
+
+.hero-input::placeholder {
+    color: #434343;
+    text-transform: capitalize;
+
+}
+.hero-input:focus {
+    width: 90%;
+    outline: thick double #F5F5F5 !important;
+    text-transform: lowercase;
+    background: #434343;
+    color: #F5F5F5;
+
+}
+
+.hero-input:hover {
+    width: 90%;
+    outline: thick double #F5F5F5 !important;
+    text-transform: lowercase;
+    background: #434343;
+    color: #F5F5F5;
+    cursor: text;
+}
+
+.hero-input::selection{
+    color: black;
+    background: #56CCF2;
+    
+}
