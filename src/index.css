@@ -47,7 +47,7 @@ code {
     outline: none;
     border: none;
 
-    width: 80%;
+    width: 60%;
     transition: width 0.5s, background 0.2s;
 }
 
@@ -78,4 +78,15 @@ code {
     color: black;
     background: #56CCF2;
     
+}
+
+
+.hero-btn:focus{
+    background: #434343 !important;
+    color: #fff !important;
+}
+
+.hero-btn:hover {
+    background: #434343 !important;
+    color: #fff !important;
 }

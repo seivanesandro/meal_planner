@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 //import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 import hero from '../../assets/hero.jpg'
+import { devices } from '../../utils/constantes';
 //import { devices } from '../../utils/constantes';
 
 const ContainerHero = styled.div`
@@ -20,7 +21,6 @@ const ContainerHero = styled.div`
     background-size: cover !important;
     width: 100%;
 
-    
 `;
 const ContainerHeroBanner = styled.div`
     display: flex;
@@ -30,10 +30,49 @@ const ContainerHeroBanner = styled.div`
     text-shadow: 1px 1px 2px #333 !important;
     gap: 2rem;
 `;
-const StyledHeroTitle = styled.h4``;
-const StyledHeroParagraph = styled.p``;
+const StyledHeroTitle = styled.h4`
+    font-family: Luminari, fantasy;
+    font-size: 5rem !important;
+
+    @media only screen and (${devices.iphone14}) {
+        font-size: 4.1rem !important;
+    }
+    @media only screen and (${devices.mobileG}) {
+        font-size: 4.1rem !important;
+    }
+    @media only screen and (${devices.mobileM}) {
+        font-size: 3.1rem !important;
+    }
+    @media only screen and (${devices.mobileP}) {
+        font-size: 3.1rem !important;
+    }
+`;
+const StyledHeroParagraph = styled.p`
+    font-family:
+        Comic Sans MS,
+        cursive;
+    font-size: 2.1rem !important;
+    @media only screen and (${devices.iphone14}) {
+        font-size: 1.3rem !important;
+    }
+    @media only screen and (${devices.mobileG}) {
+        font-size: 1.3rem !important;
+    }
+    @media only screen and (${devices.mobileM}) {
+        font-size: 1.2rem !important;
+    }
+    @media only screen and (${devices.mobileP}) {
+        font-size: 1rem !important;
+    }
+`;
 
 const Home = props => {
+    const [ search, setSearch ] = useState('');
+
+    const getSearch = () => {
+        setSearch(search);
+    }
+
   return (
       <>
           <header className="home">
@@ -68,19 +107,24 @@ const Home = props => {
                                   outline: 'none'
                               }}
                               aria-label="Search"
-                              onChange={() => {
-                                  console.log(
-                                      'get input target'
+                              onChange={e => {
+                                  setSearch(
+                                      e.target
+                                          .value
                                   );
                               }}
                           />
                           <Button
                               variant="light"
                               className="hero-btn px-5 rounded-4 shadow text-dark"
-                              style={{fontWeight: '500',}}
+                              style={{
+                                  fontWeight:
+                                      '500'
+                              }}
                               onClick={() => {
+                                  getSearch();
                                   console.log(
-                                      'click for search'
+                                      search
                                   );
                               }}
                           >
