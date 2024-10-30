@@ -8,14 +8,14 @@
 
 body {
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Comic Sans MS, cursive;
     font-optical-sizing: none;
     font-weight: 400;
     font-size: 1.3rem;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: 2px;
+    letter-spacing: 3px !important;
 
     scrollbar-color: transparent !important;
     /*scroll de baixo*/
@@ -44,7 +44,7 @@ code {
     text-transform: uppercase;
 
     background: #ccc;
-    outline: none;
+    outline: none !important;
     border: none;
 
     width: 60%;

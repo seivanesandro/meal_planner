@@ -103,9 +103,6 @@ const Home = props => {
                               placeholder="Search..."
                               variant="dark"
                               className="hero-input text-center me-2 rounded-4"
-                              styled={{
-                                  outline: 'none'
-                              }}
                               aria-label="Search"
                               onChange={e => {
                                   setSearch(
