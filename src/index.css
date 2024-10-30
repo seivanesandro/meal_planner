@@ -8,7 +8,9 @@
 
 body {
     margin: 0;
-    font-family: Comic Sans MS, cursive;
+    font-family:
+        Comic Sans MS,
+        cursive;
     font-optical-sizing: none;
     font-weight: 400;
     font-size: 1.3rem;
@@ -25,8 +27,7 @@ body {
 }
 *::selection {
     color: black;
-    background: #56CCF2;
-
+    background: #56ccf2;
 }
 
 code {
@@ -34,9 +35,7 @@ code {
         Consolas, 'Courier New', monospace;
 }
 
-
-
-.hero-input{
+.hero-input {
     font-family: cursive;
     font-size: 1rem;
     color: #434343;
@@ -48,40 +47,38 @@ code {
     border: none;
 
     width: 60%;
-    transition: width 0.5s, background 0.2s;
+    transition:
+        width 0.5s,
+        background 0.2s;
 }
 
 .hero-input::placeholder {
     color: #434343;
     text-transform: capitalize;
-
 }
 .hero-input:focus {
     width: 90%;
-    outline: thick double #F5F5F5 !important;
+    outline: thick double #f5f5f5 !important;
     text-transform: lowercase;
     background: #434343;
-    color: #F5F5F5;
-
+    color: #f5f5f5;
 }
 
 .hero-input:hover {
     width: 90%;
-    outline: thick double #F5F5F5 !important;
+    outline: thick double #f5f5f5 !important;
     text-transform: lowercase;
     background: #434343;
-    color: #F5F5F5;
+    color: #f5f5f5;
     cursor: text;
 }
 
-.hero-input::selection{
+.hero-input::selection {
     color: black;
-    background: #56CCF2;
-    
+    background: #56ccf2;
 }
 
-
-.hero-btn:focus{
+.hero-btn:focus {
     background: #434343 !important;
     color: #fff !important;
 }
