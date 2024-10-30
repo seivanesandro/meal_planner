@@ -2,10 +2,22 @@ import React, { useState } from 'react'
 //import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import hero from '../../assets/hero.jpg'
 import { devices } from '../../utils/constantes';
-//import { devices } from '../../utils/constantes';
+
+const Show = keyframes`
+    0%{
+        opacity:0;
+    }
+    50%{
+        opacity:0.5;
+    }
+
+    100%{
+        opacity:1;
+    }
+`;
 
 const ContainerHero = styled.div`
     max-width: 100%;
@@ -29,10 +41,12 @@ const ContainerHeroBanner = styled.div`
     color: #fff;
     text-shadow: 1px 1px 2px #333 !important;
     gap: 2rem;
+    animation: ${Show} 1s linear;
 `;
 const StyledHeroTitle = styled.h4`
     font-family: Luminari, fantasy;
     font-size: 5rem !important;
+    animation: ${Show} 3s ease-out;
 
     @media only screen and (${devices.iphone14}) {
         font-size: 4.1rem !important;
@@ -52,6 +66,8 @@ const StyledHeroParagraph = styled.p`
         Comic Sans MS,
         cursive;
     font-size: 2.1rem !important;
+    animation: ${Show} 2s ease-out;
+
     @media only screen and (${devices.iphone14}) {
         font-size: 1.3rem !important;
     }
