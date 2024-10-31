@@ -93,40 +93,47 @@ const Home = props => {
     const [ error, setError ] = useState(null);
 
     
+const getSearchResults = async () => {
+    setIsLoading(true);
+    setError(null);
 
-    const getSearchResults = async () => {
-        
-        setIsLoading(true);
-        setError(null);
+    try {
+        const response = await axios.get(
+            `${apiUrl}?apiKey=${apiKey}&query=${meal}&number=12&addRecipeNutrition=true&instructionsRequired`
+        );
+        const data = await response.data;
 
-        try {
-            const response = await axios.get(
-                `${apiUrl}?apiKey=${apiKey}&query=${meal}&number=12&addRecipeNutrition=true&instructionsRequired`
-            );
-            const data = await response.data;
-            
-            //test
-            console.log(data);
+        //FIXME:
+        console.log(data);
 
-            setSearch(data.results);
-        } catch (error) {
-            console.error(
-                'Error fetching search:',
-                error
-            );
-            setError(error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        setSearch(data.results);
+    } catch (error) {
+        console.error(
+            'Error fetching search:',
+            error
+        );
+        setError(error);
+    } finally {
+        setIsLoading(false);
+    }
+};
 
-    useEffect(() => {
+const handleSearch = () => {
+    if (meal) {
         getSearchResults();
-    }, [meal]);
+    }
+};
 
-    const handleSearchChange = e => {
-        setMeal(e.target.value);
-    };
+const handleSearchChange = e => {
+    setMeal(e.target.value);
+};
+
+useEffect(() => {
+    //FIXME: Só faz a requisição se meal tiver um valor e não estiver vazio
+    if (meal) {
+        getSearchResults();
+    }
+}, [meal]);
 
 
     return (
@@ -161,7 +168,9 @@ const Home = props => {
                                 className="hero-input text-center me-2 rounded-4"
                                 aria-label="Search"
                                 value={meal}
-                                
+                                onChange={
+                                    handleSearchChange
+                                }
                             />
                             <Button
                                 variant="light"
@@ -170,14 +179,20 @@ const Home = props => {
                                     fontWeight:
                                         '500'
                                 }}
-                               
+                                onClick={
+                                    handleSearch
+                                }
+                                disabled={
+                                    isLoading
+                                }
                             >
-                                Search
+                                {isLoading
+                                    ? 'Pesquisando...'
+                                    : 'Pesquisar'}
                             </Button>
                         </Form>
                     </ContainerHeroBanner>
                 </ContainerHero>
-
             </header>
         </>
     );
