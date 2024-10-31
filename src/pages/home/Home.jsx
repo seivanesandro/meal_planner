@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 //import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -20,10 +21,9 @@ const Show = keyframes`
         opacity:1;
     }
 `;
-
 const ContainerHero = styled.div`
     max-width: 100%;
-    height: 100vh;
+    height: 89vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -83,12 +83,51 @@ const StyledHeroParagraph = styled.p`
     }
 `;
 
+const apiKey = process.env.REACT_APP_API_KEY;
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Home = props => {
     const [search, setSearch] = useState('');
+    const [meal, setMeal] = useState('');
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ error, setError ] = useState(null);
 
-    const getSearch = () => {
-        setSearch(search);
+    
+
+    const getSearchResults = async () => {
+        
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const response = await axios.get(
+                `${apiUrl}?apiKey=${apiKey}&query=${meal}&number=12&addRecipeNutrition=true&instructionsRequired`
+            );
+            const data = await response.data;
+            
+            //test
+            console.log(data);
+
+            setSearch(data.results);
+        } catch (error) {
+            console.error(
+                'Error fetching search:',
+                error
+            );
+            setError(error);
+        } finally {
+            setIsLoading(false);
+        }
     };
+
+    useEffect(() => {
+        getSearchResults();
+    }, [meal]);
+
+    const handleSearchChange = e => {
+        setMeal(e.target.value);
+    };
+
 
     return (
         <>
@@ -121,12 +160,8 @@ const Home = props => {
                                 variant="dark"
                                 className="hero-input text-center me-2 rounded-4"
                                 aria-label="Search"
-                                onChange={e => {
-                                    setSearch(
-                                        e.target
-                                            .value
-                                    );
-                                }}
+                                value={meal}
+                                
                             />
                             <Button
                                 variant="light"
@@ -135,18 +170,14 @@ const Home = props => {
                                     fontWeight:
                                         '500'
                                 }}
-                                onClick={() => {
-                                    getSearch();
-                                    console.log(
-                                        search
-                                    );
-                                }}
+                               
                             >
                                 Search
                             </Button>
                         </Form>
                     </ContainerHeroBanner>
                 </ContainerHero>
+
             </header>
         </>
     );
