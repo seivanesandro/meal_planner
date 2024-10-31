@@ -182,13 +182,8 @@ useEffect(() => {
                                 onClick={
                                     handleSearch
                                 }
-                                disabled={
-                                    isLoading
-                                }
                             >
-                                {isLoading
-                                    ? 'Pesquisando...'
-                                    : 'Pesquisar'}
+                                {isLoading && (<span>loading..</span>)}pesquisar
                             </Button>
                         </Form>
                     </ContainerHeroBanner>
