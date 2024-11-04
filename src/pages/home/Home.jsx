@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+    useState,
+    useEffect
+} from 'react';
 import axios from 'axios';
 //import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
+//import Button from 'react-bootstrap/Button';
+import Loading from '../../components/load/Loading'
 import Form from 'react-bootstrap/Form';
 import styled, {
     keyframes
@@ -87,57 +91,54 @@ const apiKey = process.env.REACT_APP_API_KEY;
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const Home = props => {
-    const [search, setSearch] = useState('');
     const [meal, setMeal] = useState('');
-    const [ isLoading, setIsLoading ] = useState(false);
-    const [ error, setError ] = useState(null);
+    const [recipe, setRecipe] = useState(null);
+    const [isLoading, setIsLoading] =
+        useState(false);
+    const [error, setError] = useState(null);
 
-    
-const getSearchResults = async () => {
-    setIsLoading(true);
-    setError(null);
+    const handleSearchChange = event => {
+        setMeal(event.target.value);
+    };
 
-    try {
-        const response = await axios.get(
-            `${apiUrl}?apiKey=${apiKey}&query=${meal}&number=12&addRecipeNutrition=true&instructionsRequired`
-        );
-        const data = await response.data;
+    useEffect(() => {
+        const fetchData = async () => {
+            if (meal) {
+                // apenas pesquisa se houver um valor em 'meal'
+                setIsLoading(true);
+                try {
+                    const response =
+                        await axios.get(
+                            `${apiUrl}`,
+                            {
+                                params: {
+                                    apiKey:
+                                        `${apiKey}`,
+                                    query: meal,
+                                    number: 1,
+                                    addRecipeNutrition: true,
+                                    instructionsRequired: true,
+                                    addRecipeInformation: true
+                                }
+                            }
+                        );
+                    setRecipe(
+                        response.data.results[0]
+                    );
+                } catch (error) {
+                    setError(error);
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+        };
 
-        //FIXME:
-        console.log(data);
-
-        setSearch(data.results);
-    } catch (error) {
-        console.error(
-            'Error fetching search:',
-            error
-        );
-        setError(error);
-    } finally {
-        setIsLoading(false);
-    }
-};
-
-const handleSearch = () => {
-    if (meal) {
-        getSearchResults();
-    }
-};
-
-const handleSearchChange = e => {
-    setMeal(e.target.value);
-};
-
-useEffect(() => {
-    //FIXME: Só faz a requisição se meal tiver um valor e não estiver vazio
-    if (meal) {
-        getSearchResults();
-    }
-}, [meal]);
+        fetchData();
+    }, [meal]); // Executa 1x em cada mudança no 'meal'
 
 
     return (
-        <>
+        <div className="home-page">
             <header className="home">
                 <ContainerHero className="hero">
                     <ContainerHeroBanner className="hero-banner">
@@ -172,24 +173,41 @@ useEffect(() => {
                                     handleSearchChange
                                 }
                             />
-                            <Button
-                                variant="light"
-                                className="hero-btn px-5 rounded-4 shadow text-dark"
-                                style={{
-                                    fontWeight:
-                                        '500'
-                                }}
-                                onClick={
-                                    handleSearch
-                                }
-                            >
-                                {isLoading && (<span>loading..</span>)}pesquisar
-                            </Button>
                         </Form>
                     </ContainerHeroBanner>
                 </ContainerHero>
             </header>
-        </>
+            <div className="main-page">
+                {/* Exibir resultados, loading ou erro */}
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginTop: '3rem',
+                    }}
+                >
+                    {isLoading && <Loading />}
+
+                    {error && (
+                        <div>
+                            Erro: {error.message}
+                        </div>
+                    )}
+                </div>
+                {/* {recipe && (
+                    <div>
+                        <h1>{recipe.title}</h1>
+                        <img
+                            src={recipe.image}
+                            alt={recipe.title}
+                        />
+                        // Exibir outras informações da receita 
+                    </div>
+                )} */}
+            </div>
+        </div>
     );
 };
 
