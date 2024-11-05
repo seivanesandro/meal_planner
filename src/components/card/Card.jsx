@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import styled, { keyframes } from 'styled-components';
+import styled, {
+    keyframes
+} from 'styled-components';
 
 const Show = keyframes`
     0%{

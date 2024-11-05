@@ -10,7 +10,6 @@ const ContainerMain = styled.div`
     justify-content: center;
     gap: 10rem;
     flex-wrap: wrap;
-   
 `;
 
 const Main = ({ recipes }) => {
