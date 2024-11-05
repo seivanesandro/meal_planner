@@ -14,6 +14,7 @@ import hero from '../../assets/hero.jpg';
 import { devices } from '../../utils/constantes';
 //import CardMeal from '../../components/card/Card';
 import Main from '../main/Main';
+import Button from 'react-bootstrap/esm/Button';
 
 const Show = keyframes`
     0%{
@@ -115,6 +116,10 @@ const Home = props => {
         setMeal(event.target.value);
     };
 
+    const handleClick = () => {
+        window.location.reload();
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             if (meal) {
@@ -128,7 +133,7 @@ const Home = props => {
                                 params: {
                                     apiKey: `${apiKey}`,
                                     query: meal,
-                                    number: 1, //TODO: change to 5
+                                    number: 5, //TODO: change to 5
                                     addRecipeNutrition: true,
                                     instructionsRequired: true,
                                     addRecipeInformation: true
@@ -185,6 +190,14 @@ const Home = props => {
                                     handleSearchChange
                                 }
                             />
+                            <Button
+                                variant="outline-light"
+                                onClick={
+                                    handleClick
+                                }
+                            >
+                                Reset Search
+                            </Button>
                         </Form>
                     </ContainerHeroBanner>
                 </ContainerHero>
@@ -196,21 +209,22 @@ const Home = props => {
                     <ContainerLoading className="container-loading">
                         <Loading />
                     </ContainerLoading>
-                )
-                :
-                error ? (
+                ) : error ? (
                     <ContainerError className="container-error">
                         Error: {error.message}
                     </ContainerError>
-                ):
-                recipes.length !== 0 ? (
-                    <div style={{
-                        display:'flex', 
-                        flexDirection:'column',
-                        alignItems:' center',
-                        justifyContent: 'center',
-                        gap: '2rem'
-                    }}>
+                ) : recipes.length !== 0 ? (
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection:
+                                'column',
+                            alignItems: ' center',
+                            justifyContent:
+                                'center',
+                            gap: '2rem'
+                        }}
+                    >
                         <h1>Results:</h1>
                         <Main recipes={recipes} />
                     </div>
