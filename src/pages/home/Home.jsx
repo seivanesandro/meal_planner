@@ -109,7 +109,7 @@ const Home = props => {
     const [isLoading, setIsLoading] =
         useState(false);
     const [error, setError] = useState(null);
-    const [show, setShow] = useState(false);
+    //const [show, setShow] = useState(false);
 
     const handleSearchChange = event => {
         setMeal(event.target.value);
