@@ -5,13 +5,15 @@ import React, {
 import axios from 'axios';
 //import PropTypes from 'prop-types';
 //import Button from 'react-bootstrap/Button';
-import Loading from '../../components/load/Loading'
+import Loading from '../../components/load/Loading';
 import Form from 'react-bootstrap/Form';
 import styled, {
     keyframes
 } from 'styled-components';
 import hero from '../../assets/hero.jpg';
 import { devices } from '../../utils/constantes';
+//import CardMeal from '../../components/card/Card';
+import Main from '../main/Main';
 
 const Show = keyframes`
     0%{
@@ -27,7 +29,7 @@ const Show = keyframes`
 `;
 const ContainerHero = styled.div`
     max-width: 100%;
-    height: 89vh;
+    height: 95vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -86,16 +88,28 @@ const StyledHeroParagraph = styled.p`
         font-size: 1rem !important;
     }
 `;
+const MainPage = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 7rem auto;
+    gap: 3rem;
+`;
+const ContainerLoading = styled.div``;
+const ContainerError = styled.div``;
+const StyledNoMeals = styled.h1``;
 
 const apiKey = process.env.REACT_APP_API_KEY;
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const Home = props => {
     const [meal, setMeal] = useState('');
-    const [recipe, setRecipe] = useState(null);
+    const [recipes, setRecipes] = useState([]);
     const [isLoading, setIsLoading] =
         useState(false);
     const [error, setError] = useState(null);
+    const [show, setShow] = useState(false);
 
     const handleSearchChange = event => {
         setMeal(event.target.value);
@@ -112,18 +126,17 @@ const Home = props => {
                             `${apiUrl}`,
                             {
                                 params: {
-                                    apiKey:
-                                        `${apiKey}`,
+                                    apiKey: `${apiKey}`,
                                     query: meal,
-                                    number: 1,
+                                    number: 1, //TODO: change to 5
                                     addRecipeNutrition: true,
                                     instructionsRequired: true,
                                     addRecipeInformation: true
                                 }
                             }
                         );
-                    setRecipe(
-                        response.data.results[0]
+                    setRecipes(
+                        response.data.results
                     );
                 } catch (error) {
                     setError(error);
@@ -135,7 +148,6 @@ const Home = props => {
 
         fetchData();
     }, [meal]); // Executa 1x em cada mudança no 'meal'
-
 
     return (
         <div className="home-page">
@@ -164,7 +176,7 @@ const Home = props => {
                         >
                             <Form.Control
                                 type="search"
-                                placeholder="Search..."
+                                placeholder="Search meal..."
                                 variant="dark"
                                 className="hero-input text-center me-2 rounded-4"
                                 aria-label="Search"
@@ -177,36 +189,37 @@ const Home = props => {
                     </ContainerHeroBanner>
                 </ContainerHero>
             </header>
-            <div className="main-page">
+            <MainPage className="main-page">
                 {/* Exibir resultados, loading ou erro */}
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: '3rem',
-                    }}
-                >
-                    {isLoading && <Loading />}
 
-                    {error && (
-                        <div>
-                            Erro: {error.message}
-                        </div>
-                    )}
-                </div>
-                {/* {recipe && (
-                    <div>
-                        <h1>{recipe.title}</h1>
-                        <img
-                            src={recipe.image}
-                            alt={recipe.title}
-                        />
-                        // Exibir outras informações da receita 
+                {isLoading ? (
+                    <ContainerLoading className="container-loading">
+                        <Loading />
+                    </ContainerLoading>
+                )
+                :
+                error ? (
+                    <ContainerError className="container-error">
+                        Error: {error.message}
+                    </ContainerError>
+                ):
+                recipes.length !== 0 ? (
+                    <div style={{
+                        display:'flex', 
+                        flexDirection:'column',
+                        alignItems:' center',
+                        justifyContent: 'center',
+                        gap: '2rem'
+                    }}>
+                        <h1>Results:</h1>
+                        <Main recipes={recipes} />
                     </div>
-                )} */}
-            </div>
+                ) : (
+                    <StyledNoMeals className="styled-no-meals">
+                        Please search your meal
+                    </StyledNoMeals>
+                )}
+            </MainPage>
         </div>
     );
 };

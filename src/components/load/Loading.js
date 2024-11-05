@@ -1,5 +1,7 @@
-import styled, { keyframes } from "styled-components";
-import PropTypes from "prop-types";
+import styled, {
+    keyframes
+} from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Spinner = keyframes`
 0%,
@@ -30,27 +32,29 @@ const Spinner = keyframes`
 `;
 
 const Loading = styled.div`
-  font-size: ${({ fontSize }) => fontSize}rem;
-  width: ${({ size }) => size}em;
-  height: ${({ size }) => size}em;
-  border-radius: 50%;
-  position: relative;
-  text-indent: -9999em;
-  animation: ${Spinner} ${({ speedborder }) => speedborder}s infinite ease-out;
-  transform: translateZ(0);
-  z-index: 100;
+    font-size: ${({ fontSize }) => fontSize}rem;
+    width: ${({ size }) => size}em;
+    height: ${({ size }) => size}em;
+    border-radius: 50%;
+    position: relative;
+    text-indent: -9999em;
+    animation: ${Spinner}
+        ${({ speedborder }) => speedborder}s
+        infinite ease-out;
+    transform: translateZ(0);
+    z-index: 100;
 `;
 
 Loading.propTypes = {
-  speedborder: PropTypes.string.isRequired,
-  fontSize: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
+    speedborder: PropTypes.string.isRequired,
+    fontSize: PropTypes.string.isRequired,
+    size: PropTypes.string.isRequired
 };
 
 Loading.defaultProps = {
-  speedborder: "0.7",
-  fontSize: "1",
-  size: "1",
+    speedborder: '0.7',
+    fontSize: '1',
+    size: '1'
 };
 
 export default Loading;
