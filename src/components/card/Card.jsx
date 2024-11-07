@@ -21,10 +21,10 @@ const Show = keyframes`
 const StyleCard = styled.div`
     animation: ${Show} 2.5s ease-out;
     &:focus {
-        box-shadow: 0 0 0.5rem gold;
+        box-shadow: 0 0 0.5rem black;
     }
     &:hover {
-        box-shadow: 0 0 0.5rem gold;
+        box-shadow: 0 0 0.5rem black;
     }
 `;
 
@@ -32,7 +32,8 @@ const CardMeal = ({
     cardtitle,
     btnshow,
     imagemealsrc,
-    cardtitleimage
+    cardtitleimage,
+    onclick
 }) => {
     return (
         <>
@@ -60,6 +61,7 @@ const CardMeal = ({
                                 padding:
                                     '0 3rem 0 3rem'
                             }}
+                            onClick={onclick}
                         >
                             {btnshow}
                         </Button>

@@ -15,6 +15,7 @@ import { devices } from '../../utils/constantes';
 //import CardMeal from '../../components/card/Card';
 import Main from '../main/Main';
 import Button from 'react-bootstrap/esm/Button';
+import Modal from '../../components/modal/Modal';
 
 const Show = keyframes`
     0%{
@@ -110,7 +111,9 @@ const Home = props => {
     const [isLoading, setIsLoading] =
         useState(false);
     const [error, setError] = useState(null);
-    //const [show, setShow] = useState(false);
+
+    const [show, setShow] = useState(false);
+    const [item, setItem] = useState();
 
     const handleSearchChange = event => {
         setMeal(event.target.value);
@@ -133,7 +136,7 @@ const Home = props => {
                                 params: {
                                     apiKey: `${apiKey}`,
                                     query: meal,
-                                    number: 5, //TODO: change to 5
+                                    number: 1, //TODO: change to 5
                                     addRecipeNutrition: true,
                                     instructionsRequired: true,
                                     addRecipeInformation: true
@@ -226,13 +229,19 @@ const Home = props => {
                         }}
                     >
                         <h1>Results:</h1>
-                        <Main recipes={recipes} />
+
+                        <Main
+                            recipes={recipes}
+                            setItem={setItem}
+                            setShow={setShow}
+                        />
                     </div>
                 ) : (
                     <StyledNoMeals className="styled-no-meals">
                         Please search your meal
                     </StyledNoMeals>
                 )}
+                <Modal item={item} show={show} />
             </MainPage>
         </div>
     );

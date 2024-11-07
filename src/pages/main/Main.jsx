@@ -12,7 +12,7 @@ const ContainerMain = styled.div`
     flex-wrap: wrap;
 `;
 
-const Main = ({ recipes }) => {
+const Main = ({ recipes, setShow, setItem }) => {
     return (
         <ContainerMain className="container-main">
             {recipes &&
@@ -30,6 +30,10 @@ const Main = ({ recipes }) => {
                                 recipe.title
                             }
                             btnshow="Show"
+                            onclick={() => {
+                                setShow(true);
+                                setItem(recipe);
+                            }}
                         />
                     );
                 })}
