@@ -3,6 +3,14 @@ import Button from 'react-bootstrap/esm/Button';
 //import PropTypes from 'prop-types'
 import styled from 'styled-components';
 
+const ContainerDisher = styled.div``;
+const DishesTitle = styled.h4``;
+const ContainerImageDishes = styled.div``;
+const StyledImageDishes = styled.img``;
+const ContainerAnalyzedIngredients = styled.div``;
+const ContainerNutrients = styled.div``;
+const ContainerAnalyzedInstructions = styled.div``;
+
 const Modal = ({ item, show }) => {
     if (show === false || item === null) {
         return null;
@@ -715,13 +723,5 @@ const Modal = ({ item, show }) => {
 };
 
 Modal.propTypes = {};
-
-/* 
-results[0].nutrition.nutrients[0].name;
-results[0].nutrition.nutrients[0].amount;
-results[0].nutrition.nutrients[0].unit;
-results[0].nutrition.nutrients[0].percentOfDailyNeeds;
-results[0].nutrition.weightPerServing.amount;
-results[0].nutrition.weightPerServing.unit; */
 
 export default Modal;
