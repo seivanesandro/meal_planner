@@ -123,6 +123,10 @@ const Home = props => {
         window.location.reload();
     };
 
+    const handleCloseModal = () => {
+        setShow(false);
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             if (meal) {
@@ -205,6 +209,13 @@ const Home = props => {
                     </ContainerHeroBanner>
                 </ContainerHero>
             </header>
+            {show && (
+                <Modal
+                    item={item}
+                    show={show}
+                    onClose={handleCloseModal}
+                />
+            )}
             <MainPage className="main-page">
                 {/* Exibir resultados, loading ou erro */}
 
@@ -241,7 +252,6 @@ const Home = props => {
                         Please search your meal
                     </StyledNoMeals>
                 )}
-                <Modal item={item} show={show} />
             </MainPage>
         </div>
     );
