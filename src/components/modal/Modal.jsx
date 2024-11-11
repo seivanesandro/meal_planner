@@ -5,6 +5,9 @@ import styled, {
     keyframes
 } from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
+import { devices } from '../../utils/constantes';
+
+import Table from 'react-bootstrap/Table';
 
 const Show = keyframes`
     0%{
@@ -28,7 +31,6 @@ const ShowScale = keyframes`
   }
 
 `;
-
 const ContainerDisher = styled.div`
     display: block;
     position: fixed;
@@ -80,6 +82,34 @@ const ContainerImageIngredients = styled.div`
     justify-content: space-evenly;
     align-items: center;
     gap: 7rem;
+
+    @media only screen and (${devices.portatil}) {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    @media only screen and (${devices.portatilS}) {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    @media only screen and (${devices.tablet}) {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    @media only screen and (${devices.iphone14}) {
+        flex-direction: column;
+    }
+    @media only screen and (${devices.mobileG}) {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    @media only screen and (${devices.mobileM}) {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    @media only screen and (${devices.mobileP}) {
+        flex-direction: column;
+        gap: 3rem;
+    }
 `;
 
 const DishesTitle = styled.h4`
@@ -87,6 +117,59 @@ const DishesTitle = styled.h4`
         font-weight: 700;
         text-align: center;
         font-size: 2.5rem;
+    }
+    &.item-title-Ingredients {
+        font-weight: 700;
+        text-align: start;
+    }
+
+    &.item-title-nutrients {
+        font-weight: 700;
+        text-align: center;
+    }
+
+    @media only screen and (${devices.tablet}) {
+        &.item-title-dishes {
+            font-weight: 700;
+            text-align: center;
+            font-size: 2rem;
+        }
+        &.item-title-nutrients {
+            text-align: start;
+        }
+    }
+    @media only screen and (${devices.iphone14}) {
+        &.item-title-dishes {
+            font-size: 1.5rem;
+        }
+        &.item-title-nutrients {
+            text-align: start;
+        }
+    }
+    @media only screen and (${devices.mobileG}) {
+        &.item-title-dishes {
+            font-size: 1.5rem;
+        }
+        &.item-title-nutrients {
+            text-align: center;
+        }
+    }
+    @media only screen and (${devices.mobileM}) {
+        &.item-title-dishes {
+            font-size: 1.3rem;
+        }
+        &.item-title-nutrients {
+            text-align: center;
+        }
+    }
+    @media only screen and (${devices.mobileP}) {
+        &.item-title-dishes {
+            font-size: 1.3rem;
+            text-align: start;
+        }
+        &.item-title-nutrients {
+            text-align: center;
+        }
     }
 `;
 const StyledImageDishes = styled.img`
@@ -96,10 +179,29 @@ const StyledImageDishes = styled.img`
     }
 `;
 
-const ContainerAnalyzedIngredients = styled.div``;
+const ContainerAnalyzedIngredients = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+
+    @media only screen and (${devices.iphone14}) {
+        margin-left: 2rem;
+    }
+    @media only screen and (${devices.mobileG}) {
+        margin-left: 2rem;
+    }
+    @media only screen and (${devices.mobileM}) {
+        margin-left: 1rem;
+    }
+    @media only screen and (${devices.mobileP}) {
+        margin-left: 0;
+    }
+`;
 
 const ContainerNutrients = styled.div``;
-const ContainerItemsNutrients = styled.div``;
+//const ContainerItemsNutrients = styled.div``;
+
 const ContainerAnalyzedInstructions = styled.div``;
 
 const Modal = ({ item, show, onClose }) => {
@@ -142,6 +244,9 @@ const Modal = ({ item, show, onClose }) => {
                                     }
                                 />
                                 <ContainerAnalyzedIngredients className="container-analyzed-ingredients">
+                                    <DishesTitle className="item-title-Ingredients">
+                                        Ingredients
+                                    </DishesTitle>
                                     <ul>
                                         {item.nutrition.ingredients.map(
                                             ingredient => {
@@ -158,6 +263,7 @@ const Modal = ({ item, show, onClose }) => {
                                                     >
                                                         <Button
                                                             variant="light"
+                                                            className="style-font-size"
                                                             style={{
                                                                 textTransform:
                                                                     'uppercase'
@@ -177,726 +283,684 @@ const Modal = ({ item, show, onClose }) => {
                         </ContainerImageTitleIngredients>
 
                         <ContainerNutrients className="container-nutrients">
-                            <DishesTitle>
+                            <DishesTitle className="item-title-nutrients">
                                 Nutrients info
-                                table:
+                                table
                             </DishesTitle>
-
-                            <ContainerItemsNutrients className="item-calories">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[0]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[0]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[0]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[0]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-fat">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[1]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[1]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[1]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[1]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-saturated-fat">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[2]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[2]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[2]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[2]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-Carbohydrates">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[3]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[3]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[3]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[3]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-sugar">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[5]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[5]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[5]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[5]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-cholesterol">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[6]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[6]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[6]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[6]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-protein">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[10]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[10]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[10]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[10]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-vitamin-C">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[11]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[11]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[11]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[11]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-calcium">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[16]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[16]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[16]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[16]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-fiber">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[21]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[21]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[21]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[21]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-zinc">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[25]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[25]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[25]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[25]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-magnesium">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[26]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[26]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[26]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[26]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
-
-                            <ContainerItemsNutrients className="item-iron">
-                                <>
-                                    <Button variant="danger">
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[29]
-                                                .name
-                                        }
-                                        :
-                                    </Button>
-                                    <Button variant="warning">
-                                        <span>
-                                            {
-                                                item
-                                                    .nutrition
-                                                    .nutrients[29]
-                                                    .amount
-                                            }
-                                        </span>
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[29]
-                                                .unit
-                                        }{' '}
-                                        per{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .amount
-                                        }
-                                        {
-                                            item
-                                                .nutrition
-                                                .weightPerServing
-                                                .unit
-                                        }
-                                    </Button>
-                                    <Button variant="success">
-                                        Percent of
-                                        Daily Need
-                                        -{' '}
-                                        {
-                                            item
-                                                .nutrition
-                                                .nutrients[29]
-                                                .percentOfDailyNeeds
-                                        }
-                                        mg
-                                    </Button>
-                                </>
-                            </ContainerItemsNutrients>
                         </ContainerNutrients>
+
+                        <Table
+                            responsive="sm"
+                            striped
+                            bordered
+                            hover
+                            size="sm"
+                        >
+                            <tbody>
+                                <tr>
+                                    <td className="style-td bg-danger font-weight-bold">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[0]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td font-weight-normal">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[0]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[0]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+
+                                    <td className="style-td bg-warning font-weight-bold">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[0]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[1]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[1]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[1]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[1]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[2]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[2]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[2]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[2]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[3]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[3]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[3]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[3]
+                                                .percentOfDailyNeeds
+                                        }
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[5]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[5]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[5]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[5]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[6]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[6]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[6]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[6]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[10]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[10]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[10]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[10]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[11]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[11]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[11]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[11]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[16]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[16]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[16]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[16]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[21]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[21]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[21]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[21]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[25]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[25]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[25]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[25]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[26]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[26]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[26]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[26]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[29]
+                                                .name
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[29]
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[29]
+                                                .unit
+                                        }{' '}
+                                        per{' '}
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .amount
+                                        }
+                                        {
+                                            item
+                                                .nutrition
+                                                .weightPerServing
+                                                .unit
+                                        }
+                                    </td>
+                                    <td className="style-td">
+                                        Percent of
+                                        Daily Need
+                                    </td>
+                                    <td className="style-td">
+                                        {
+                                            item
+                                                .nutrition
+                                                .nutrients[29]
+                                                .percentOfDailyNeeds
+                                        }
+                                        mg
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </Table>
 
                         <ContainerAnalyzedInstructions className="container-analyzed-instructions">
                             <DishesTitle>
