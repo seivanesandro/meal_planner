@@ -295,6 +295,7 @@ const Modal = ({ item, show, onClose }) => {
                             bordered
                             hover
                             size="sm"
+                            className="shadow-1"
                         >
                             <tbody>
                                 <tr>
