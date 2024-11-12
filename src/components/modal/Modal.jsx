@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 //import PropTypes from 'prop-types'
 import styled, {
@@ -43,16 +43,27 @@ const ContainerDisher = styled.div`
     background-color: rgba(0, 0, 0, 0.7);
 `;
 const ModalContent = styled.div`
+    font-family: Luminari;
+    font-weight: 600;
+    letter-spacing: 3px;
+
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
     border-radius: 6px;
+    gap: 6rem;
     animation:
         ${Show} 0.7s ease-in,
         ${ShowScale} 1s ease-out;
+
+    @media only screen and (${devices.mobileP}) {
+        padding: 0;
+        width: 98%;
+    }
 `;
+
 const CloseModal = styled.div`
     text-align: end;
     font-size: 3rem;
@@ -113,6 +124,10 @@ const ContainerImageIngredients = styled.div`
 `;
 
 const DishesTitle = styled.h4`
+    text-transform: uppercase;
+    font-family: Luminari;
+    font-weight: 600;
+    letter-spacing: 5px;
     &.item-title-dishes {
         font-weight: 700;
         text-align: center;
@@ -128,6 +143,10 @@ const DishesTitle = styled.h4`
         text-align: center;
     }
 
+    &.item-title-instruction {
+        font-weight: 700;
+        text-align: center;
+    }
     @media only screen and (${devices.tablet}) {
         &.item-title-dishes {
             font-weight: 700;
@@ -135,6 +154,9 @@ const DishesTitle = styled.h4`
             font-size: 2rem;
         }
         &.item-title-nutrients {
+            text-align: start;
+        }
+        &.item-title-instruction {
             text-align: start;
         }
     }
@@ -145,6 +167,9 @@ const DishesTitle = styled.h4`
         &.item-title-nutrients {
             text-align: start;
         }
+        &.item-title-instruction {
+            text-align: start;
+        }
     }
     @media only screen and (${devices.mobileG}) {
         &.item-title-dishes {
@@ -152,6 +177,9 @@ const DishesTitle = styled.h4`
         }
         &.item-title-nutrients {
             text-align: center;
+        }
+        &.item-title-instruction {
+            text-align: start;
         }
     }
     @media only screen and (${devices.mobileM}) {
@@ -161,6 +189,9 @@ const DishesTitle = styled.h4`
         &.item-title-nutrients {
             text-align: center;
         }
+        &.item-title-instruction {
+            text-align: center;
+        }
     }
     @media only screen and (${devices.mobileP}) {
         &.item-title-dishes {
@@ -168,6 +199,9 @@ const DishesTitle = styled.h4`
             text-align: start;
         }
         &.item-title-nutrients {
+            text-align: center;
+        }
+        &.item-title-instruction {
             text-align: center;
         }
     }
@@ -202,9 +236,86 @@ const ContainerAnalyzedIngredients = styled.div`
 const ContainerNutrients = styled.div``;
 //const ContainerItemsNutrients = styled.div``;
 
-const ContainerAnalyzedInstructions = styled.div``;
+const ContainerAnalyzedInstructions = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin: 5rem auto 5rem auto;
+    text-align: justify;
+    animation: ${Show} 0.7s ease-in;
+    border: 15px dotted #ccc;
+    padding: 5rem;
 
-const Modal = ({ item, show, onClose }) => {
+    @media only screen and (${devices.tablet}) {
+        padding: 1rem;
+        border: none !important;
+    }
+    @media only screen and (${devices.tablet}) {
+    }
+    @media only screen and (${devices.iphone14}) {
+    }
+    @media only screen and (${devices.mobileG}) {
+    }
+    @media only screen and (${devices.mobileM}) {
+    }
+    @media only screen and (${devices.mobileP}) {
+    }
+`;
+
+const InstrutionsStyle = styled.ul`
+    width: 80%;
+    @media only screen and (${devices.tablet}) {
+        width: 99%;
+        text-align: left;
+    }
+    @media only screen and (${devices.iphone14}) {
+        width: 100%;
+        text-align: left;
+        font-size: medium;
+    }
+    @media only screen and (${devices.mobileG}) {
+        width: 100%;
+        text-align: left;
+        font-size: medium;
+    }
+    @media only screen and (${devices.mobileM}) {
+        width: 100%;
+        text-align: left;
+        font-size: medium;
+    }
+    @media only screen and (${devices.mobileP}) {
+        width: 86%;
+        text-align: left;
+        font-size: medium;
+    }
+`;
+
+const ContainerBtn = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15rem;
+    margin: 2rem auto 5rem auto ;
+`;
+
+const Modal = ({ item, show, onClose, setCalories, setFat, setCarb, setProtein, calories, fat, carb, protein  }) => {
+
+    const [ isShowInstructor, setIsShowInstructor ] = useState(false);
+
+    const handleClickSetInfo = () => {
+
+        setCalories(calories + item.nutrition.nutrients[0].amount);
+        setFat(fat + item.nutrition.nutrients[1].amount);
+        setCarb(carb + item.nutrition.nutrients[3].amount);
+        setProtein(protein + item.nutrition.nutrients[10].amount);
+    };
+
+    const handleTogglingInstructions = () => setIsShowInstructor(!isShowInstructor);
+
+
+
     if (!show || item === null) {
         return null;
     } else {
@@ -284,8 +395,8 @@ const Modal = ({ item, show, onClose }) => {
 
                         <ContainerNutrients className="container-nutrients">
                             <DishesTitle className="item-title-nutrients">
-                                Nutrients info
-                                table
+                                Nutricional
+                                declaration
                             </DishesTitle>
                         </ContainerNutrients>
 
@@ -296,10 +407,19 @@ const Modal = ({ item, show, onClose }) => {
                             hover
                             size="sm"
                             className="shadow-1"
+                            style={{
+                                fontSize: '1.1rem'
+                            }}
                         >
                             <tbody>
                                 <tr>
-                                    <td className="style-td bg-danger font-weight-bold">
+                                    <td
+                                        className="style-td font-weight-bold"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -335,9 +455,16 @@ const Modal = ({ item, show, onClose }) => {
                                         }
                                     </td>
 
-                                    <td className="style-td bg-warning font-weight-bold">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td font-weight-bold"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -351,7 +478,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -386,9 +519,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -402,7 +542,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -437,9 +583,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -453,7 +606,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -488,9 +647,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -503,7 +669,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -538,9 +710,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -554,7 +733,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -589,9 +774,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -605,7 +797,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -640,9 +838,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -656,7 +861,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -691,9 +902,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -707,7 +925,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -742,9 +966,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -758,7 +989,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -793,9 +1030,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -809,7 +1053,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -844,9 +1094,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -860,7 +1117,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -895,9 +1158,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -911,7 +1181,13 @@ const Modal = ({ item, show, onClose }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="style-td">
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
                                         {
                                             item
                                                 .nutrition
@@ -946,9 +1222,16 @@ const Modal = ({ item, show, onClose }) => {
                                                 .unit
                                         }
                                     </td>
-                                    <td className="style-td">
-                                        Percent of
-                                        Daily Need
+                                    <td
+                                        className="style-td"
+                                        style={{
+                                            textTransform:
+                                                'uppercase'
+                                        }}
+                                    >
+                                        %
+                                        Recomended
+                                        Dose
                                     </td>
                                     <td className="style-td">
                                         {
@@ -963,33 +1246,81 @@ const Modal = ({ item, show, onClose }) => {
                             </tbody>
                         </Table>
 
-                        <ContainerAnalyzedInstructions className="container-analyzed-instructions">
-                            <DishesTitle>
-                                Instructions to
-                                Cook:
-                            </DishesTitle>
-                            <ul style={{}}>
-                                {item.analyzedInstructions[0].steps.map(
-                                    step => {
-                                        return (
-                                            <li
-                                                key={
-                                                    step.number
-                                                }
-                                                style={{
-                                                    listStyle:
-                                                        'square'
-                                                }}
-                                            >
-                                                {
-                                                    step.step
-                                                }
-                                            </li>
-                                        );
-                                    }
-                                )}
-                            </ul>
-                        </ContainerAnalyzedInstructions>
+                        <ContainerBtn className="container-btn">
+                            <Button
+                                variant="primary"
+                                style={{
+                                    textAlign:
+                                        'center',
+                                    textTransform:
+                                        'uppercase',
+                                    padding:
+                                        '1.5rem 3rem ',
+                                    boxShadow:
+                                        '0 0 0.3rem black',
+                                    fontWeight:
+                                        '600'
+                                }}
+                                onClick={
+                                    handleTogglingInstructions
+                                }
+                            >
+                                See recipe..
+                            </Button>
+                        </ContainerBtn>
+
+                        {isShowInstructor && (
+                            <ContainerAnalyzedInstructions className="container-analyzed-instructions">
+                                <DishesTitle className="item-title-instruction">
+                                    Instructions
+                                    to Cook:
+                                </DishesTitle>
+                                <InstrutionsStyle className="instrutions-style">
+                                    {item.analyzedInstructions[0].steps.map(
+                                        step => {
+                                            return (
+                                                <li
+                                                    key={
+                                                        step.number
+                                                    }
+                                                    style={{
+                                                        listStyle:
+                                                            'square'
+                                                    }}
+                                                >
+                                                    {
+                                                        step.step
+                                                    }
+                                                </li>
+                                            );
+                                        }
+                                    )}
+                                </InstrutionsStyle>
+                                <ContainerBtn className="container-btn m-5">
+                                    <Button
+                                        variant="success"
+                                        style={{
+                                            textAlign:
+                                                'center',
+                                            textTransform:
+                                                'uppercase',
+                                            padding:
+                                                '1.5rem 3rem ',
+                                            boxShadow:
+                                                '0 0 0.3rem black',
+                                            fontWeight:
+                                                '600'
+                                        }}
+                                        onClick={
+                                            handleClickSetInfo
+                                        }
+                                    >
+                                        Let's
+                                        eat!!!
+                                    </Button>
+                                </ContainerBtn>
+                            </ContainerAnalyzedInstructions>
+                        )}
                     </ModalContent>
                 </ContainerDisher>
             </>

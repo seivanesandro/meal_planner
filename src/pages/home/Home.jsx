@@ -100,12 +100,12 @@ const MainPage = styled.div`
 `;
 const ContainerLoading = styled.div``;
 const ContainerError = styled.div``;
-const StyledNoMeals = styled.h1``;
+const StyledNoMeals = styled.h5``;
 
 const apiKey = process.env.REACT_APP_API_KEY;
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const Home = props => {
+const Home = ( {setCalories,setFat, setCarb, setProtein, calories, fat, carb, protein})  => {
     const [meal, setMeal] = useState('');
     const [recipes, setRecipes] = useState([]);
     const [isLoading, setIsLoading] =
@@ -140,7 +140,7 @@ const Home = props => {
                                 params: {
                                     apiKey: `${apiKey}`,
                                     query: meal,
-                                    number: 1, //TODO: change to 5
+                                    number: 8, //TODO: change to 5
                                     addRecipeNutrition: true,
                                     instructionsRequired: true,
                                     addRecipeInformation: true
@@ -214,6 +214,14 @@ const Home = props => {
                     item={item}
                     show={show}
                     onClose={handleCloseModal}
+                    setCalories={setCalories}
+                    setCarb={setCarb}
+                    setFat={setFat}
+                    setProtein={setProtein}
+                    calories={calories}
+                    fat={fat}
+                    carb={carb}
+                    protein={protein}
                 />
             )}
             <MainPage className="main-page">
