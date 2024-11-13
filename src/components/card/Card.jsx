@@ -20,12 +20,6 @@ const Show = keyframes`
 `;
 const StyleCard = styled.div`
     animation: ${Show} 2.5s ease-out;
-    &:focus {
-        box-shadow: 0 0 0.5rem black;
-    }
-    &:hover {
-        box-shadow: 0 0 0.5rem black;
-    }
 `;
 
 const CardMeal = ({
@@ -38,7 +32,10 @@ const CardMeal = ({
     return (
         <>
             <StyleCard className="style-card">
-                <Card style={{ width: '15rem' }}>
+                <Card
+                    style={{ width: '15rem' }}
+                    className="rounded shadow card-color-hover"
+                >
                     <Card.Img
                         variant="top"
                         src={imagemealsrc}

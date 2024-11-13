@@ -53,7 +53,6 @@ const ContainerHeroBanner = styled.div`
     animation: ${Show} 1s linear;
 `;
 const StyledHeroTitle = styled.h4`
-    font-family: Luminari, fantasy;
     font-size: 5rem !important;
     animation: ${Show} 3s ease-out;
 
@@ -99,7 +98,10 @@ const MainPage = styled.div`
     gap: 3rem;
 `;
 const ContainerLoading = styled.div``;
-const ContainerError = styled.div``;
+const ContainerError = styled.div`
+    text-align:center;
+    padding: 1rem;
+`;
 const StyledNoMeals = styled.h5``;
 
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -138,7 +140,7 @@ const Home = ( {setCalories,setFat, setCarb, setProtein, calories, fat, carb, pr
                             `${apiUrl}`,
                             {
                                 params: {
-                                    apiKey: `${apiKey}`,
+                                    apikey: `${apiKey}`,
                                     query: meal,
                                     number: 8, //TODO: change to 5
                                     addRecipeNutrition: true,

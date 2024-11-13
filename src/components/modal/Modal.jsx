@@ -43,7 +43,6 @@ const ContainerDisher = styled.div`
     background-color: rgba(0, 0, 0, 0.7);
 `;
 const ModalContent = styled.div`
-    font-family: Luminari;
     font-weight: 600;
     letter-spacing: 3px;
 
@@ -125,7 +124,6 @@ const ContainerImageIngredients = styled.div`
 
 const DishesTitle = styled.h4`
     text-transform: uppercase;
-    font-family: Luminari;
     font-weight: 600;
     letter-spacing: 5px;
     &.item-title-dishes {
@@ -245,7 +243,7 @@ const ContainerAnalyzedInstructions = styled.div`
     margin: 5rem auto 5rem auto;
     text-align: justify;
     animation: ${Show} 0.7s ease-in;
-    border: 15px dotted #ccc;
+    border: 15px dotted #fff0e2fa;
     padding: 5rem;
 
     @media only screen and (${devices.tablet}) {
@@ -1248,7 +1246,7 @@ const Modal = ({ item, show, onClose, setCalories, setFat, setCarb, setProtein, 
 
                         <ContainerBtn className="container-btn">
                             <Button
-                                variant="primary"
+                                variant="dark"
                                 style={{
                                     textAlign:
                                         'center',
