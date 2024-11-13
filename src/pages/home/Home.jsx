@@ -140,7 +140,7 @@ const Home = ( {setCalories,setFat, setCarb, setProtein, calories, fat, carb, pr
                             `${apiUrl}`,
                             {
                                 params: {
-                                    apikey: `${apiKey}`,
+                                    apiKey: `${apiKey}`,
                                     query: meal,
                                     number: 8, //TODO: change to 5
                                     addRecipeNutrition: true,
